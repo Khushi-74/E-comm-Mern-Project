@@ -8,8 +8,9 @@ const Nav = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    localStorage.clear();
-    navigate("/signup");
+    localStorage.removeItem("user"); // Remove user data
+    localStorage.removeItem("token"); // Remove JWT token
+    navigate("/signup"); // Redirect to Signup page
   };
 
   return (
@@ -36,7 +37,13 @@ const Nav = () => {
           <li>
             {" "}
             <Link onClick={logout} to="/signup">
-              Logout ({JSON.parse(auth).name}){" "}
+              Logout (
+              {auth
+                ? JSON.parse(auth)?.displayName
+                  ? JSON.parse(auth).displayName
+                  : JSON.parse(auth).name
+                : "User"}
+              )
             </Link>
           </li>
         </ul>
@@ -47,6 +54,9 @@ const Nav = () => {
           </li>
           <li>
             <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/signInGoogle">signup With Google</Link>
           </li>
         </ul>
       )}

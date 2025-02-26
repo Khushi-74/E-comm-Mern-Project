@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import AddProduct from "./components/AddProduct";
 import ProductList from "./components/ListProduct";
 import UpdateProduct from "./components/UpdateProduct";
+import GoogleSignup from "./components/GoogleSignup";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path = "/signInGoogle" element={<GoogleSignup/>}></Route>
         </Routes>
       </BrowserRouter>
       <Footer />

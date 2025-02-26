@@ -1,13 +1,5 @@
-
-
-
-
-
-
-
-
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -16,8 +8,9 @@ const Login = () => {
     const auth = localStorage.getItem("user");
     if (auth) {
       navigate("/");
-    }
+    } 
   });
+
   const handleLogin = async () => {
     console.warn(email, password);
     let result = await fetch("http://localhost:5000/login", {

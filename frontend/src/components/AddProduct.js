@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getTokenType } from "../utils";
 
 const AddProduct = ()=>{
 
@@ -18,14 +19,17 @@ const AddProduct = ()=>{
         console.warn(name,price,category,company)
        
         const userId = JSON.parse(localStorage.getItem('user'))._id;
-       
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = localStorage.getItem("token") || user?.stsTokenManager?.accessToken ;
         let result = await fetch("http://localhost:5000/addProduct", {
             method: "post",
             body: JSON.stringify({ name, price , category , company , userId}), //spelling should be consistent with the schema `
             headers: {
-              "Content-Type": "application/json",
-               authorization : `bearer ${JSON.parse(localStorage.getItem('token'))}`
-            },
+                   authorization:
+                     getTokenType(token) === "jwt"
+                       ? `bearer ${JSON.parse(token)}`
+                       : `bearer ${token}`,
+                 },
           })
           result = await result.json();
 
