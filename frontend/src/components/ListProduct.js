@@ -19,7 +19,6 @@ const ListProduct = () => {
       console.warn("no product found");
     } else {
       result = await result.json();
-
       setProducts(result);
     }
   };
@@ -46,7 +45,6 @@ const ListProduct = () => {
         },
       });
       result = await result.json();
-
       setProducts(result);
     } else {
       getProducts();
