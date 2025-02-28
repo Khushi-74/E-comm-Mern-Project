@@ -32,7 +32,7 @@ const Login = () => {
       }
       response = await response.json();
       //set token and user on local storage
-      localStorage.setItem("token", user.accessToken);
+      localStorage.setItem("token", JSON.stringify(user.accessToken));
       localStorage.setItem("user", JSON.stringify(response.user));
       navigate("/");
     } catch (error) {

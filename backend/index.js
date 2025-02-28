@@ -127,21 +127,42 @@ app.get("/search/:key", verifyToken, async (req, resp) => {
   resp.send(result);
 });
 
-function verifyToken(req, resp, next) {
+async function verifyToken(req, resp, next) {
   let token = req.headers["authorization"];
   if (token) {
-    token = token.split(" ")[1];
-    Jwt.verify(token, JwtKey, (err, succ) => {
-      if (err) {
-        resp
-          .status(401)
-          .send({ result: "please provide valid token with header" });
-      } else {
-        next();
+    try {
+      verifyJWTToken(token);
+    } catch (error) {
+      try {
+        verifyFirebaseToken(token);
+      } catch (error) {
+        console.error("Invalid Token Format:", error.message);
+        throw new Error("Invalid token");
       }
-    });
+    } finally {
+      next();
+    }
   } else {
     resp.status(403).send({ result: "please add token with header" });
+  }
+}
+
+async function verifyFirebaseToken(token) {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    console.log("Valid Firebase Token:", decodedToken);
+    return { valid: true, type: "Firebase" };
+  } catch (error) {
+      console.error("invalid token");
+  }
+}
+
+function verifyJWTToken(token) {
+  try {
+    Jwt.verify(token, JwtKey);
+    return { valid: true, type: "JWT" };
+  } catch (error) {
+    console.error("Invalid JWT Token:", error.message);
   }
 }
 
