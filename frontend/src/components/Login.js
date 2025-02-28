@@ -1,13 +1,7 @@
-
-
-
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { auth, provider, signInWithPopup } from "./Firebase";
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -18,6 +12,34 @@ const Login = () => {
       navigate("/");
     }
   });
+
+  const handleGoogleLogin = async () => {
+    try {
+      let result = await signInWithPopup(auth, provider);
+      //get user from google
+      const user = result.user;
+      //send this data to backend
+      let response = await fetch("http://localhost:5000/google-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: user.accessToken }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Google login failed");
+      }
+      response = await response.json();
+      //set token and user on local storage
+      localStorage.setItem("token", user.accessToken);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      navigate("/");
+    } catch (error) {
+      console.error("Google Login Error:", error);
+    }
+  };
+
   const handleLogin = async () => {
     console.warn(email, password);
     let result = await fetch("http://localhost:5000/login", {
@@ -56,6 +78,14 @@ const Login = () => {
       />
       <button onClick={handleLogin} className="signupButton" type="button">
         Login
+      </button>
+      <div>OR</div>
+      <button
+        onClick={handleGoogleLogin}
+        className="signupButton"
+        type="button"
+      >
+        Login with Google
       </button>
     </div>
   );
