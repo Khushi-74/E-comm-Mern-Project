@@ -1,45 +1,68 @@
 const express = require("express");
 const cors = require("cors");
-
+const admin = require("./FirebaseAdmin");
 
 require("./db/config");
 const User = require("./db/User");
 const Product = require("./db/Product");
 
-const Jwt = require("jsonwebtoken")
-const JwtKey = 'e-comm';  //iske base pe token generate hota h , it should be secret 
-
+const Jwt = require("jsonwebtoken");
+const JwtKey = "e-comm"; //iske base pe token generate hota h , it should be secret
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.post("/google-login", async (req, res) => {
+  try {
+    console.log("hello");
+    console.log(req);
+    const { token } = req.body;
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    //get details from decoded token
+    const { email, name } = decodedToken;
+    //check if user exists
+    let user = await User.findOne({ email });
+    if (!user) {
+      // If user does not exist, create a new user
+      user = new User({
+        name,
+        email,
+      });
+      //add to db
+      await user.save();
+    }
+    //send back user as json
+    res.json({ user });
+  } catch (error) {
+    res.status(400).json({ error: "Invalid Firebase Token" });
+  }
+});
 
 app.post("/signup", async (req, resp) => {
   let user = new User(req.body);
   let result = await user.save();
   result = result.toObject(); // object me convert krke access kr diya or fir password hta diya
   delete result.password;
-  Jwt.sign({result},JwtKey, {expiresIn:"2h"},(err, token )=>{
-    if(err)
-    {
-      resp.send({result: "something went wrong , Please try again"})
+  Jwt.sign({ result }, JwtKey, { expiresIn: "2h" }, (err, token) => {
+    if (err) {
+      resp.send({ result: "something went wrong , Please try again" });
     }
-    resp.send({user,auth:token});
-})});
+    resp.send({ user, auth: token });
+  });
+});
 
 app.post("/login", async (req, resp) => {
   console.log(req.body);
   if (req.body.password && req.body.email) {
     let user = await User.findOne(req.body).select("-password");
     if (user) {
-      Jwt.sign({user},JwtKey, {expiresIn:"2h"},(err, token )=>{
-        if(err)
-        {
-          resp.send({result: "spething went wrong , Please try again"})
+      Jwt.sign({ user }, JwtKey, { expiresIn: "2h" }, (err, token) => {
+        if (err) {
+          resp.send({ result: "spething went wrong , Please try again" });
         }
-        resp.send({user,auth:token});
-      })
-     
+        resp.send({ user, auth: token });
+      });
     } else resp.send({ result: "user not found" });
   } else {
     resp.send("Please enter missing field");
@@ -52,7 +75,7 @@ app.post("/addProduct", verifyToken, async (req, resp) => {
   resp.send(result);
 });
 
-app.get("/products",verifyToken, async (req, resp) => {
+app.get("/products", verifyToken, async (req, resp) => {
   let products = await Product.find();
   if (products.length > 0) {
     resp.send(products);
@@ -62,7 +85,7 @@ app.get("/products",verifyToken, async (req, resp) => {
 });
 
 //deleting product base don id
-app.delete("/product/:id", verifyToken ,async (req, resp) => {
+app.delete("/product/:id", verifyToken, async (req, resp) => {
   // resp.send(req.params.id)
   const result = await Product.deleteOne({ _id: req.params.id });
   console.warn(result);
@@ -80,7 +103,7 @@ app.get("/product/:id", verifyToken, async (req, resp) => {
 });
 
 //update product api
-app.put("/product/:id", verifyToken , async (req, resp) => {
+app.put("/product/:id", verifyToken, async (req, resp) => {
   let result = await Product.updateOne(
     {
       _id: req.params.id,
@@ -98,30 +121,48 @@ app.get("/search/:key", verifyToken, async (req, resp) => {
     $or: [
       { name: { $regex: req.params.key } },
       { category: { $regex: req.params.key } },
-      { company: { $regex: req.params.key } }
+      { company: { $regex: req.params.key } },
     ],
   });
   resp.send(result);
-
 });
 
-function verifyToken(req,resp,next){
-  let token = req.headers['authorization']
-  if(token)
-  {
-    token = token.split(' ')[1];
-    Jwt.verify(token, JwtKey, (err,succ)=>{
-      if(err)
-      {
-        resp.status(401).send({result:"please provide valid token with header"})
+async function verifyToken(req, resp, next) {
+  let token = req.headers["authorization"];
+  if (token) {
+    try {
+      verifyJWTToken(token);
+    } catch (error) {
+      try {
+        verifyFirebaseToken(token);
+      } catch (error) {
+        console.error("Invalid Token Format:", error.message);
+        throw new Error("Invalid token");
       }
-      else{
-          next();
-      }
-    })
+    } finally {
+      next();
+    }
+  } else {
+    resp.status(403).send({ result: "please add token with header" });
   }
-  else{
-      resp.status(403).send({result:"please add token with header"})
+}
+
+async function verifyFirebaseToken(token) {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    console.log("Valid Firebase Token:", decodedToken);
+    return { valid: true, type: "Firebase" };
+  } catch (error) {
+      console.error("invalid token");
+  }
+}
+
+function verifyJWTToken(token) {
+  try {
+    Jwt.verify(token, JwtKey);
+    return { valid: true, type: "JWT" };
+  } catch (error) {
+    console.error("Invalid JWT Token:", error.message);
   }
 }
 
