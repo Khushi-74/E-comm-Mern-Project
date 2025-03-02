@@ -20,6 +20,27 @@
   width: 100%;
   text-align: center;
 }
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+}
+
+[data-theme="light"] {
+  --background-color: white;
+  --text-color: black;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease-in-out;
+}
+
 
 .App-logo {
   height: 40vmin;
