@@ -69,6 +69,11 @@ app.post("/login", async (req, resp) => {
   }
 });
 
+
+
+
+
+
 app.post("/addProduct", verifyToken, async (req, resp) => {
   let product = new Product(req.body);
   let result = await product.save();
