@@ -125,6 +125,15 @@ body {
   margin-left: 10px;
 }
 
+.mode {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  float: right;
+  margin-top: 3px;
+  margin-left: 10px;
+}
+
 .invalid-input {
   display: block;
   color: red;

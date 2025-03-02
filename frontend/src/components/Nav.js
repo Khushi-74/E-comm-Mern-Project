@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ThemeToggle from "../Context/ThemeToggle";
 
 
 const Nav = () => {
@@ -20,6 +21,7 @@ const Nav = () => {
         className="logo"
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHMxuqqnkGPEc0_-r1VvKQ4wALmZ3x-ueuUA&s"
       ></img>
+          <ThemeToggle />
       {auth ? (
         <ul className="nav-ul">
           <li>

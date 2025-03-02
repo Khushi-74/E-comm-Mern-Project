@@ -9,7 +9,7 @@ import AddProduct from "./components/AddProduct";
 import ProductList from "./components/ListProduct";
 import UpdateProduct from "./components/UpdateProduct";
 import { globalThemeContext } from "./Context/ThemeContext";
-import ThemeToggle from "./Context/ThemeToggle";
+
 import { useContext} from "react";
 
 
@@ -22,7 +22,7 @@ function App() {
       <BrowserRouter>
       
         <Nav />
-        <ThemeToggle />
+    
         <Routes>
           <Route element={<PrivateComponent />}>
             <Route path="/" element={<ProductList />} />
