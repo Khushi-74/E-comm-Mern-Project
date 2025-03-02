@@ -8,12 +8,21 @@ import Login from "./components/Login";
 import AddProduct from "./components/AddProduct";
 import ProductList from "./components/ListProduct";
 import UpdateProduct from "./components/UpdateProduct";
+import { globalThemeContext } from "./Context/ThemeContext";
+
+import { useContext} from "react";
+
+
 
 function App() {
+  const { theme } = useContext(globalThemeContext);
+
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <BrowserRouter>
+      
         <Nav />
+    
         <Routes>
           <Route element={<PrivateComponent />}>
             <Route path="/" element={<ProductList />} />
