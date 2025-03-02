@@ -14,25 +14,24 @@ vs code -> code .
 
 ## 📌 Step 2: Install Dependencies for entire project
 
-
 npm install
 
-# Navigate to the backend and install dependencies
+### Navigate to the backend and install dependencies
 cd backend
 npm install
 
-# Navigate to the frontend and install dependencies
+### Navigate to the frontend and install dependencies
 cd frontend
 npm install
 
-Step 3: Set Up Database Connection
+## 📌 Step 3: Set Up Database Connection
 Ensure MongoDB is installed and running locally
 
-Step 4: Run the backend
+## 📌 Step 4: Run the backend
 cd backend
 nodemon index.js
 
-Step 5: Run the frontend
+## 📌 Step 5: Run the frontend
 cd frontend
 npm start
 
