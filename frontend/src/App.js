@@ -11,12 +11,16 @@ import UpdateProduct from "./components/UpdateProduct";
 import { globalThemeContext } from "./Context/ThemeContext";
 import ThemeToggle from "./Context/ThemeToggle";
 import { useContext} from "react";
+
+
+
 function App() {
   const { theme } = useContext(globalThemeContext);
 
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <BrowserRouter>
+      
         <Nav />
         <ThemeToggle />
         <Routes>

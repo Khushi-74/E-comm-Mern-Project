@@ -1,17 +1,21 @@
 import React from "react";
 import { useContext } from "react";
 import { globalThemeContext } from "./ThemeContext";
+import { FaSun, FaMoon } from "react-icons/fa";
 
-const ThemeToggle = ()=>{
-
-    const {theme,setTheme} = useContext(globalThemeContext)
-    return (
-        <div>
-             <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-      {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
-    </button>
-        </div>
-    )
-}
+const ThemeToggle = () => {
+  const { theme, setTheme } = useContext(globalThemeContext);
+  return (
+          <div>
+        <button
+          className="theme-toggle"
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        >
+          {theme === "light" ? <FaMoon size={20} /> : <FaSun size={20} />}
+        </button>
+      </div>
+  
+  );
+};
 
 export default ThemeToggle;

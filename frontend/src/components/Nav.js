@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 const Nav = () => {
   const auth = localStorage.getItem("user");
   const navigate = useNavigate();
@@ -42,12 +43,14 @@ const Nav = () => {
         </ul>
       ) : (
         <ul className="nav-ul nav-right">
+         
           <li>
             <Link to="/signup">Signup</Link>
           </li>
           <li>
             <Link to="/login">Login</Link>
           </li>
+          
         </ul>
       )}
     </div>
