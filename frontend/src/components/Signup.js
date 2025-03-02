@@ -40,7 +40,7 @@ const Signup = ()=>{
    
     return(
         <div className="Signup">
-            <h3>Dive Into World Of Electronics !</h3>
+            <h3>Welcome</h3>
 
             <div className="input-group">
             <label>Name</label>
