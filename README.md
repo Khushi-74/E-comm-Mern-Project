@@ -2,17 +2,15 @@
 
 Follow these steps to set up and run the project locally.  
 
----
 
 ## 📌 Step 1: Clone the Repository  
 
 
-git clone https://github.com/Khushi-74/E-comm-Mern-Project.git
-cd E-comm-Mern-Project.git
+git clone https://github.com/Khushi-74/E-comm-Mern-Project.git//
+cd E-comm-Mern-Project.git//
 vs code -> code .
 
----
-```sh
+
 
 ## 📌 Step 2: Install Dependencies for entire project
 
