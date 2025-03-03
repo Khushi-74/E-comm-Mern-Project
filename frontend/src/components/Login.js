@@ -42,7 +42,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     console.warn(email, password);
-    let result = await fetch("http://localhost:5000/login", {
+    let response = await fetch("http://localhost:5000/login", {
       method: "post",
       body: JSON.stringify({ email, password }),
       headers: {
@@ -50,7 +50,11 @@ const Login = () => {
       },
     });
 
-    result = await result.json();
+    let result = await response.json();
+    if(response.status===404)
+    {
+      alert(result.message)
+    }
     console.warn(result);
     if (result.auth) {
       localStorage.setItem("user", JSON.stringify(result.user));
