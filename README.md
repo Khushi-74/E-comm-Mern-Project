@@ -37,16 +37,14 @@ npm start
 
 ## 📌 Step 6: Add Products via Postman  
 
-Follow these steps to add a product using **Postman**:  
-
+Follow these steps to add a product using **Postman**: 
 1. **Open Postman** and create a **POST** request.  
-2. Set the **Request URL** to:  
-
-http://localhost:5000/addproduct
-
-3. Go to the **Body** tab and select **raw** → **JSON** format.  
-4. Add the following JSON data:  
-
+2. First you have to "Signup" with "Name" and "Password" using the **Post** request and upon submitting the request, a token will be generated in the Postman console and copy the token.
+3. Create a new Post Request and in the **Header** tab search for the key **Authorization** and set the value as the above copied token
+4. Set the **Request URL** to:  
+    http://localhost:5000/addproduct
+5. Go to the **Body** tab and select **raw** → **JSON** format.  
+6. Add the following JSON data:  
 ```json
 {
   "name": "Product Name",
