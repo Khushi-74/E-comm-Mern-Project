@@ -45,7 +45,7 @@ Follow these steps to add a product using **Postman**:
     http://localhost:5000/addproduct
 5. Go to the **Body** tab and select **raw** → **JSON** format.  
 6. Add the following JSON data:  
-```json
+
 {
   "name": "Product Name",
   "price": 100,
