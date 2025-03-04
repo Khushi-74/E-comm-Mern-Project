@@ -41,9 +41,19 @@ app.post("/google-login", async (req, res) => {
 
 app.post("/signup", async (req, resp) => {
   let user = new User(req.body);
+
+  const{name,email,password} = req.body;
+  let existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+        return resp.status(400).json({ message: "User already exists" });
+    }
+
+
   let result = await user.save();
   result = result.toObject(); // object me convert krke access kr diya or fir password hta diya
   delete result.password;
+  
   Jwt.sign({ result }, JwtKey, { expiresIn: "2h" }, (err, token) => {
     if (err) {
       resp.send({ result: "something went wrong , Please try again" });
@@ -63,7 +73,8 @@ app.post("/login", async (req, resp) => {
         }
         resp.send({ user, auth: token });
       });
-    } else resp.send({ result: "user not found" });
+    } else 
+    resp.status(404).json({ message: "Please Signup first , then login " });
   } else {
     resp.send("Please enter missing field");
   }
