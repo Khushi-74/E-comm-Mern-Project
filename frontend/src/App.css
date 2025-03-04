@@ -98,11 +98,11 @@ body {
 }
 
 .inputBox {
-  padding: 7px;
+  padding: 9px;
   display: block;
   border: 1px solid skyblue;
   width: 300px;
-  margin: 20px;
+  margin: 4px;
 }
 
 .appButton {
@@ -172,4 +172,28 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Signup Error css */
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 12px;
+  align-items: ;
+  margin-top: 7px;
+  padding: 5px;
+  display: block;
+  font-weight: bold;
+}
+
+/* Red border for invalid inputs */
+.inputBox.input-error {
+  border: 2px solid red !important;
+  background-color: #ffe6e6; /* Light red background for better visibility */
+}
+
+.signupButton{
+  color: black;
+    padding: 5px;
+    margin: 21px;
 }
