@@ -37,28 +37,41 @@ const Signup = () => {
 
   return (
     <div className="Signup">
-      <h1>signup page</h1>
-      <input
-        className="inputBox"
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Enter Name"
-      ></input>
-      <input
-        className="inputBox"
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter Email"
-      ></input>
-      <input
-        className="inputBox"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Enter Password"
-      ></input>
+      <h3>Welcome</h3>
+
+      <div className="input-group">
+        <label>Name</label>
+        <input
+          className="inputBox"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter Name"
+        ></input>
+      </div>
+
+      <div className="input-group">
+        <label>Email</label>
+        <input
+          className="inputBox"
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter Email"
+        ></input>
+      </div>
+
+      <div className="input-group">
+        <label>Password</label>
+        <input
+          className="inputBox"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter Password"
+        ></input>
+      </div>
+
       <button onClick={collectData} className="signupButton" type="button">
         Sign Up
       </button>

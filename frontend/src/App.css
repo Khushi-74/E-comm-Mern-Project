@@ -1,11 +1,12 @@
-
 .nav-ul {
   padding: 5px;
-  margin: 0px;
+  margin-bottom: 100px;
   background-color: skyblue;
+  margin-top: 0;
+  margin-bottom: 70px;
 }
-.nav-ul li{
-  display:  inline-block;
+.nav-ul li {
+  display: inline-block;
   padding: 10px;
 }
 .nav-ul li a {
@@ -13,11 +14,53 @@
   text-decoration: none;
   padding: 5px;
 }
+.input-group {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2px;
+  margin: 15px auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  .label {
+    margin-bottom: 5px;
+    padding: 10px;
+  }
+}
+
+.input-group:last-of-type {
+  margin-bottom: 25px; /* Add extra space before the Sign Up button */
+}
+.Signup {
+  width: 300px;
+  margin: auto;
+  padding: 0px;
+
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.signupButton {
+  background-color: #007bff; /* Blue color */
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+ 
+}
+
 .footer {
   position: absolute;
   bottom: 0;
   background-color: skyblue;
   width: 100%;
+  text-align: center;
+}
+
+h3 {
   text-align: center;
 }
 :root {
@@ -40,7 +83,6 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-
 .theme-toggle:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -61,12 +103,10 @@ body {
   transition: background 0.3s ease-in-out;
 }
 
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -89,20 +129,28 @@ body {
   color: #61dafb;
 }
 
-.register, .product{
+.register,
+.product {
   margin-left: 30%;
 }
-.login{
+.login {
   margin-left: 30%;
   margin-top: 100px;
 }
 
 .inputBox {
-  padding: 7px;
+  /* padding: 7px;
   display: block;
   border: 1px solid skyblue;
   width: 300px;
-  margin: 20px;
+  margin: 20px; */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 3px;
 }
 
 .appButton {
@@ -113,7 +161,7 @@ body {
   border: solid 1px;
   cursor: pointer;
 }
-.nav-right{
+.nav-right {
   text-align: right;
 }
 .logo {
@@ -153,7 +201,7 @@ body {
   padding: 5px;
 }
 
-.product-list ul{
+.product-list ul {
   margin: 0;
 }
 

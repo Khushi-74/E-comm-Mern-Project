@@ -65,7 +65,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="login">
+    <div className="Signup">
       <input
         className="inputBox"
         type="text"
