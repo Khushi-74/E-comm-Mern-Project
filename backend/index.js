@@ -63,21 +63,36 @@ app.post("/signup", async (req, resp) => {
 });
 
 app.post("/login", async (req, resp) => {
-  console.log(req.body);
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return resp.status(400).json({ message: "Please enter missing fields" });
+  }
   if (req.body.password && req.body.email) {
-    let user = await User.findOne(req.body).select("-password");
+    let user = await User.findOne({email});
+    if(!user)
+    {
+     return resp.status(404).json({ message: "Please Signup first , then login " });
+    }
+
+    if(user.password!== password)
+    {
+      
+      return resp.status(401).json({ message: "Incorrect password" });
+
+    }
+    // Remove password before sending response
+  user = user.toObject();
+  delete user.password;
     if (user) {
       Jwt.sign({ user }, JwtKey, { expiresIn: "2h" }, (err, token) => {
         if (err) {
-          resp.send({ result: "spething went wrong , Please try again" });
+          resp.send({ result: "something went wrong , Please try again" });
         }
         resp.send({ user, auth: token });
       });
-    } else 
-    resp.status(404).json({ message: "Please Signup first , then login " });
-  } else {
-    resp.send("Please enter missing field");
-  }
+    } 
+      } 
 });
 
 app.post("/addProduct", verifyToken, async (req, resp) => {

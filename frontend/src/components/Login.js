@@ -55,6 +55,10 @@ const Login = () => {
     {
       alert(result.message)
     }
+    if(response.status===401)
+      {
+        alert(result.message)
+      }
     console.warn(result);
     if (result.auth) {
       localStorage.setItem("user", JSON.stringify(result.user));
